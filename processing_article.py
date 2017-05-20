@@ -119,9 +119,9 @@ def make_article_instance(dir_news):
     article_list_all = list_pol + list_soc + list_eco + list_it + list_wor + list_spo + list_cul + list_ent
 
     ''' 기사 2160개(7.27MB)로 모델 트레이닝
-    doc2vectorizer = doc_to_vector(article_list_all)
-    doc2vectorizer.save('trained.model')
-    doc2vectorizer.wv.save_word2vec_format('trained.word2vec')'''
+    doc_to_vector(article_list_all)'''
+    #doc2vectorizer.save('trained.model')
+    #doc2vectorizer.wv.save_word2vec_format('trained.word2vec')
 
     doc2vectorizer = models.Doc2Vec.load('trained.model') # 트레이닝된 모델 로드
 
@@ -164,7 +164,8 @@ def doc_to_vector(article_list):
         model.alpha -=0.002
         model.min_alpha = model.alpha
 
-    return model
+    model.save('trained.model')
+    model.wv.save_word2vec_format('trained.word2vec')
 
 def get_keywords(text): # text에서 키워드 구하는 함수
     #keywords = [noun for noun in _twitter.nouns(text) if noun not in _stopwords]
